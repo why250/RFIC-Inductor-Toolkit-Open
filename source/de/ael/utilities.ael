@@ -1420,7 +1420,7 @@ defun Update_EM_Pin_Layers (context)
       if ((is_IHP) && ((PinNumber == 1) || (PinNumber == 2))) TargetLayerID=crossover_layerID;
       
       // NOTE: the XML emState files do NOT make this detection, and change PGS pin to spiral layer
-      // This is OK per Info from Filip Demuynck : "It’s what is defined in the layout for the ports that will be passed to the EM solver."
+      // This is OK per Info from Filip Demuynck : "Itï¿½s what is defined in the layout for the ports that will be passed to the EM solver."
       //
       // emSetup/emModel dialog will auto-update from layout pin layers, then SAVE to emSetup/emModel
      
@@ -1722,7 +1722,7 @@ defun set_emStateFile_Pinlayer (modeldir, new_layerNum, new_layerName)
 
 
   // NOTE: the XML emStateFiles update does not handle PGS pin layer, it uses spiral layer for all pins
-  // This is OK per Info from Filip Demuynck : "It’s what is defined in the layout for the ports that will be passed to the EM solver."
+  // This is OK per Info from Filip Demuynck : "Itï¿½s what is defined in the layout for the ports that will be passed to the EM solver."
 
   
   // read the model.ndx file
@@ -2895,7 +2895,14 @@ while ((rightstr(tempname,1) != "/") && (rightstr(tempname,1) != "\\")) {
   tempname = leftstr(tempname, stringlength -1);
 }
 
-decl filename = strcat(tempname, "PDK_path.loc");
+
+// Add username to file name for linux multi user safety
+decl username = getsysenv("USER");
+if (username == NULL || username == "") {
+  username = "unknown";
+}
+
+decl filename = strcat(tempname, "PDK_path_", username, ".loc");
 decl fID = fopen(filename, "W");  // open file for reading
 if (fID!=NULL) {
   fputs(fID, MUEHLHAUS_INDUCTOR_PDK_PATH);    

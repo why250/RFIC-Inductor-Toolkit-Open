@@ -718,7 +718,14 @@ defun get_PDK_path()
     tempname = leftstr(tempname, stringlength -1);
   }
 
-  decl filename = strcat (tempname,"PDK_path.loc");
+
+  // Add username to file name for linux multi user safety
+  decl username = getsysenv("USER");
+  if (username == NULL || username == "") {
+    username = "unknown";
+  }
+
+  decl filename = strcat(tempname, "PDK_path_", username, ".loc");
   decl fID = fopen(filename, "R");  // open file for reading
   decl fline;
 
